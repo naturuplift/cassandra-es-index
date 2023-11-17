@@ -1,0 +1,26 @@
+version: "2"
+
+services:
+
+  elasticsearch:
+    image: elasticsearch:${ES_VERSION}
+    #command: "elasticsearch -Des.cluster.name=cassandraEs"
+    networks:
+      - samples
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+  cassandra:
+    image: gartcimore/cassandra-es-index
+    networks:
+      - samples
+    ports:
+      - "9061:9060"
+      - "9042:9042"
+
+networks:
+  samples:
